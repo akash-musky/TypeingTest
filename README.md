@@ -107,3 +107,27 @@ Browser tests use the installed Google Chrome through Playwright's `chrome` chan
 
 Deploy `dist/` to any static host. Hash-based navigation needs no server route rewrites. Local storage is scoped to the browser and site origin; export results from the Results page before clearing browser data.
 # TypeingTest
+
+## Deploy to Netlify
+
+**Live site:** https://typeorbit-akash-kumar.netlify.app
+
+**Netlify dashboard:** https://app.netlify.com/projects/typeorbit-akash-kumar
+
+The first production deployment was published from the local `dist/` build. This checkout is linked to that Netlify site.
+
+`netlify.toml` configures the build command (`npm run build`), publish folder (`dist`), and Node.js 24. No environment variables are required. The local `.netlify/` account/site link is ignored by Git.
+
+For manual deployments from this folder:
+
+```sh
+npm exec --yes --package=netlify-cli -- netlify login
+npm run build
+npm exec --yes --package=netlify-cli -- netlify deploy --prod --dir=dist --no-build
+```
+
+On the first deployment, link this folder to the intended Netlify site or create a new one. Later deployments reuse that site. The CLI prints the published URL after a successful upload.
+
+For automatic deployments, import the `akash-musky/TypeingTest` GitHub repository in Netlify, select the `main` branch, and use the settings in `netlify.toml`. Commit and push this configuration before enabling Git deployments. A manual CLI deployment does not enable automatic GitHub deployments by itself.
+
+Saved test results are local to each browser and origin. Your localhost results will not automatically appear on the new Netlify URL; export them from the local app if you want to keep a copy.
