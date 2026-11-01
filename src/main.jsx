@@ -3,6 +3,7 @@ import ReactDOM from "react-dom/client";
 import App from "./App";
 import "./styles.css";
 import "./workspace.css";
+import "./brand.css";
 
 class ErrorBoundary extends React.Component {
   state = { failed: false };
@@ -22,7 +23,7 @@ class ErrorBoundary extends React.Component {
             className="primary-button"
             onClick={() => window.location.reload()}
           >
-            Reload TypingTest
+            Reload TypeOrbit
           </button>
         </div>
       );

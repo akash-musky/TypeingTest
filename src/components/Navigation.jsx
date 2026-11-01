@@ -1,12 +1,12 @@
 import {
   BarChart3,
-  Command,
   Keyboard,
   Moon,
   Settings2,
   Sparkles,
   Sun,
 } from "lucide-react";
+import TypeOrbitLogo from "./TypeOrbitLogo";
 
 const items = [
   { id: "test", label: "Test", icon: Keyboard },
@@ -22,18 +22,15 @@ export default function Navigation({ page, onNavigate, theme, toggleTheme }) {
         <a
           href="#test"
           className="brand"
-          aria-label="TypingTest home"
+          aria-label="TypeOrbit home"
           onClick={(e) => {
             e.preventDefault();
             onNavigate("test");
           }}
         >
-          <span className="brand-icon">
-            <Keyboard size={30} strokeWidth={1.8} />
-          </span>
-          <span>
-            Typing<span className="brand-light">Test</span>
-            <span className="brand-dot">.</span>
+          <TypeOrbitLogo />
+          <span className="brand-wordmark">
+            Type<span>Orbit</span>
           </span>
         </a>
         <nav aria-label="Main navigation" className="nav-links">
@@ -56,7 +53,7 @@ export default function Navigation({ page, onNavigate, theme, toggleTheme }) {
         </nav>
         <div className="nav-right">
           <span className="flow-label">
-            <span /> Find your flow
+            <span /> Type Beyond Limits.
           </span>
           <button
             className="icon-button theme-button"
@@ -75,13 +72,11 @@ export default function Navigation({ page, onNavigate, theme, toggleTheme }) {
 export function Footer() {
   return (
     <footer className="site-footer">
-      <span>
-        <Command size={14} /> A little better, one keystroke at a time.
+      <span className="footer-motto">
+        <TypeOrbitLogo size={22} /> Type Beyond Limits.
       </span>
-      <span>
-        Made for focus.
-        <i />
-        Built for you.
+      <span className="footer-credit">
+        Built by <strong>Akash Kumar</strong>
       </span>
     </footer>
   );

@@ -1,3 +1,5 @@
+// Keep the original storage namespace so existing users retain their history and preferences.
+// These internal keys are deliberately independent of the public TypeOrbit brand.
 export const defaults = {
   theme: "dark",
   sound: false,

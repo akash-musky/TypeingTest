@@ -6,6 +6,7 @@ import TypingArea from "./components/TypingArea";
 import Results, { ResultDetail } from "./components/Results";
 import Practice from "./components/Practice";
 import Settings from "./components/Settings";
+import SpaceBackground from "./components/SpaceBackground";
 import { useTypingTest } from "./hooks/useTypingTest";
 import { persist, readPreferences, readResults } from "./lib/storage";
 
@@ -49,7 +50,7 @@ export default function App() {
       .querySelector('meta[name="theme-color"]')
       ?.setAttribute(
         "content",
-        preferences.theme === "dark" ? "#0b0c14" : "#f7f7fc",
+        preferences.theme === "dark" ? "#0B1020" : "#f7f7fc",
       );
     if (!persist("preferences", preferences)) setStorageError(true);
   }, [preferences]);
@@ -62,7 +63,7 @@ export default function App() {
 
   useEffect(() => {
     if (page !== "test") test.restart();
-    document.title = `${page === "test" ? "Find your flow" : page.charAt(0).toUpperCase() + page.slice(1)} — TypingTest`;
+    document.title = "TypeOrbit — Type Beyond Limits.";
   }, [page, test.restart]);
 
   useEffect(() => {
@@ -108,14 +109,13 @@ export default function App() {
     page === "test" && test.session.status === "finished" && latest;
   const hero = {
     test: {
-      eyebrow: "A LITTLE PRACTICE. A LOT OF PROGRESS.",
+      eyebrow: "FIND YOUR FOCUS. EXPAND YOUR ORBIT.",
       title: (
         <>
-          Test Your <span>Typing Speed</span>
+          Type Beyond <span>Limits.</span>
         </>
       ),
-      subtitle:
-        "Clear your mind. Find your rhythm. Let your fingers do the talking.",
+      subtitle: "A little focus. A steady rhythm. A universe of possibility.",
     },
     results: {
       eyebrow: "EVERY KEYSTROKE TELLS A STORY.",
@@ -150,8 +150,9 @@ export default function App() {
 
   return (
     <div
-      className={`app-shell minimal-app ${page === "test" && test.session.status === "running" ? "test-running" : ""}`}
+      className={`app-shell minimal-app typeorbit-app ${page === "test" && test.session.status === "running" ? "test-running" : ""}`}
     >
+      <SpaceBackground />
       <a className="skip-link" href="#main">
         Skip to content
       </a>
@@ -172,7 +173,9 @@ export default function App() {
             ? `Test complete. ${latest.wpm} words per minute. ${latest.accuracy}% accuracy.`
             : ""}
         </div>
-        <section className={page === "test" && !completed ? "sr-only" : "hero"}>
+        <section
+          className={page === "test" && !completed ? "hero orbit-hero" : "hero"}
+        >
           <div className="hero-eyebrow">
             <span className="eyebrow-icon">
               <Zap size={11} fill="currentColor" />

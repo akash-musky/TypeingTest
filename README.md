@@ -26,7 +26,7 @@ Use a Node.js version supported by Vite 8: Node 20.19+, 22.12+, or a newer suppo
 - Random words, sentences, number sequences, and punctuation passages.
 - A borderless, Monkeytype-inspired typing screen with a single left-aligned countdown, three lines of text, character feedback, and a scrolling caret. Speed, accuracy, and errors appear after completion.
 - Early completion when the passage ends; input locks when a session is complete.
-- Optional synthesized sounds, navy/violet and light themes, adjustable text size, and reduced-motion support. No virtual keyboard or statistics sidebar.
+- Optional synthesized sounds, charcoal/yellow and light themes, adjustable text size, and reduced-motion support. No virtual keyboard or statistics sidebar.
 - Results with a WPM-over-time chart, personal best, history filters, individual session review, and JSON export.
 - Four focused practice drills, including a short home-row passage.
 - Responsive layouts, labeled controls, keyboard navigation, a skip link, and touch-compatible textarea input.
@@ -47,12 +47,12 @@ Click the text and type to begin. On desktop the input is focused automatically;
 
 ## Keyboard shortcuts
 
-| Action                        | Shortcut                     |
-| ----------------------------- | ---------------------------- |
-| Restart the test              | `Ctrl + Enter` / `⌘ + Enter` |
-| Restart from the typing field | `Tab` then `Enter`           |
-| Reset the test                | `Escape`                     |
-| Correct the last character    | `Backspace`                  |
+| Action                     | Shortcut                     |
+| -------------------------- | ---------------------------- |
+| Restart the test           | `Ctrl + Enter` / `⌘ + Enter` |
+| Restart from the typing field | `Tab` then `Enter` |
+| Reset the test             | `Escape`                     |
+| Correct the last character | `Backspace`                  |
 
 Control/Command + Enter and Escape work during a test and on its completion screen. Tab then Enter uses the restart button immediately after the typing field in the tab order.
 
@@ -106,5 +106,4 @@ npm run preview      # Serve the production build locally
 Browser tests use the installed Google Chrome through Playwright's `chrome` channel. If Chrome is unavailable, install it or switch the configuration to a Playwright browser available on your machine. Screenshots and failure traces are saved in the ignored `test-results/` directory.
 
 Deploy `dist/` to any static host. Hash-based navigation needs no server route rewrites. Local storage is scoped to the browser and site origin; export results from the Results page before clearing browser data.
-
 # TypeingTest

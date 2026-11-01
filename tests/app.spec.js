@@ -1,5 +1,71 @@
 import { test, expect } from "@playwright/test";
 
+test("TypeOrbit preserves existing history and preferences and respects reduced motion", async ({
+  page,
+}) => {
+  await page.emulateMedia({ reducedMotion: "reduce" });
+  await page.addInitScript(() => {
+    localStorage.setItem(
+      "typingtest.preferences",
+      JSON.stringify({
+        theme: "light",
+        duration: 60,
+        sound: true,
+        difficulty: "hard",
+        mode: "words",
+      }),
+    );
+    localStorage.setItem(
+      "typingtest.results",
+      JSON.stringify([
+        {
+          id: "existing-session",
+          date: "2026-11-01T12:00:00Z",
+          wpm: 83,
+          accuracy: 99,
+          errors: 4,
+          correct: 415,
+          duration: 60,
+          configuredDuration: 60,
+          difficulty: "hard",
+          mode: "words",
+          practice: null,
+          samples: [
+            { second: 0, wpm: 0 },
+            { second: 60, wpm: 83 },
+          ],
+        },
+      ]),
+    );
+  });
+  await page.goto("/");
+  await expect(page).toHaveTitle("TypeOrbit — Type Beyond Limits.");
+  await expect(
+    page.getByRole("link", { name: "TypeOrbit home" }),
+  ).toBeVisible();
+  await expect(
+    page.getByRole("heading", { name: "Type Beyond Limits." }),
+  ).toBeVisible();
+  await expect(page.getByText("Built by Akash Kumar")).toBeVisible();
+  await expect(page.locator("html")).toHaveAttribute("data-theme", "light");
+  await expect(
+    page.getByRole("button", { name: "DURATION: 60s", exact: true }),
+  ).toHaveAttribute("aria-pressed", "true");
+  expect(
+    await page
+      .locator(".orbit-moon")
+      .evaluate((element) => getComputedStyle(element).animationName),
+  ).toBe("none");
+  await page.getByRole("link", { name: "Results", exact: true }).click();
+  await expect(page.locator("tbody tr")).toHaveCount(1);
+  await expect(page.locator(".table-speed")).toContainText("83");
+  await page.getByRole("link", { name: "Settings", exact: true }).click();
+  await expect(
+    page.getByRole("switch", { name: "Typing sounds" }),
+  ).toHaveAttribute("aria-checked", "true");
+  await expect(page).toHaveTitle("TypeOrbit — Type Beyond Limits.");
+});
+
 test("timer, mistakes, correction, results, chart and history persistence", async ({
   page,
 }) => {
@@ -141,7 +207,7 @@ test("practice can complete early, exports history, and clears data only on conf
   const downloadPromise = page.waitForEvent("download");
   await page.getByRole("button", { name: "Export", exact: true }).click();
   expect((await downloadPromise).suggestedFilename()).toBe(
-    "typingtest-results.json",
+    "typeorbit-results.json",
   );
   await page.getByRole("link", { name: "Settings", exact: true }).click();
   await page
@@ -260,7 +326,7 @@ test("unavailable or malformed storage does not break the app", async ({
   });
   await page.goto("/");
   await expect(
-    page.getByRole("heading", { name: "Test Your Typing Speed" }),
+    page.getByRole("heading", { name: "Type Beyond Limits." }),
   ).toBeVisible();
   await expect(page.locator(".storage-notice")).toContainText(
     "Browser storage is unavailable",

@@ -1,0 +1,324 @@
+/* TypeOrbit brand layer. Typing layout and scoring remain independent of the identity. */
+:root {
+  --bg: #0b1020;
+  --surface: rgba(19, 25, 46, 0.72);
+  --surface-solid: #141b30;
+  --surface-raised: #1c2340;
+  --text: #f3f3fc;
+  --secondary: #acb3cc;
+  --muted: #8c96b3;
+  --border: rgba(163, 178, 228, 0.13);
+  --border-hover: rgba(168, 85, 247, 0.45);
+  --purple: #a855f7;
+  --cyan: #22d3ee;
+  --chart-grid: #293149;
+}
+:root[data-theme="light"] {
+  --bg: #f7f7fc;
+  --surface: rgba(255, 255, 255, 0.76);
+  --surface-solid: #fff;
+  --surface-raised: #eeedf9;
+  --text: #24213d;
+  --secondary: #625d7d;
+  --muted: #77718c;
+  --border: rgba(100, 77, 155, 0.15);
+  --border-hover: rgba(147, 51, 234, 0.4);
+  --purple: #9333ea;
+  --cyan: #087e98;
+  --chart-grid: #e4e0f0;
+}
+.typeorbit-app {
+  background:
+    radial-gradient(
+      ellipse 780px 440px at 50% -70px,
+      #a855f71c,
+      transparent 80%
+    ),
+    radial-gradient(
+      ellipse 650px 500px at 105% 65%,
+      #22d3ee08,
+      transparent 80%
+    ),
+    var(--bg);
+}
+.space-background {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: -1;
+}
+.space-stars {
+  position: absolute;
+  inset: 0;
+  background-image:
+    radial-gradient(circle at 12% 21%, #b4a2ee 0 1px, transparent 1.6px),
+    radial-gradient(circle at 83% 14%, #22d3ee 0 1px, transparent 1.6px),
+    radial-gradient(circle at 94% 48%, #d5c8fd 0 1px, transparent 1.6px),
+    radial-gradient(circle at 6% 72%, #9b8aba 0 1px, transparent 1.6px),
+    radial-gradient(circle at 67% 85%, #22d3ee 0 1px, transparent 1.6px),
+    radial-gradient(circle at 31% 9%, #b4a2ee 0 1px, transparent 1.6px);
+  opacity: 0.35;
+}
+.space-orbit {
+  position: absolute;
+  border: 1px solid #a855f713;
+  border-radius: 50%;
+  pointer-events: none;
+}
+.orbit-outer {
+  width: 720px;
+  height: 720px;
+  right: -330px;
+  top: -420px;
+  transform: rotate(-35deg);
+}
+.orbit-inner {
+  width: 620px;
+  height: 620px;
+  right: -280px;
+  top: -370px;
+  border-color: #22d3ee0c;
+}
+.orbit-lower {
+  width: 640px;
+  height: 640px;
+  left: -470px;
+  bottom: -390px;
+  border-color: #22d3ee10;
+}
+.orbit-moon {
+  position: absolute;
+  inset: 0;
+  animation: orbit-revolve 110s linear infinite;
+}
+.orbit-moon::before {
+  content: "";
+  position: absolute;
+  top: -2px;
+  left: calc(50% - 2px);
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: #22d3ee88;
+  box-shadow: 0 0 12px #22d3ee40;
+}
+.typeorbit-app .brand {
+  gap: 7px;
+  font-size: 28px;
+  letter-spacing: -1.25px;
+}
+.typeorbit-logo {
+  flex-shrink: 0;
+  display: block;
+}
+.brand > .typeorbit-logo {
+  width: 49px;
+  height: 49px;
+  filter: drop-shadow(0 0 9px #a855f71c);
+}
+.brand-wordmark {
+  font-weight: 650;
+}
+.brand-wordmark > span {
+  font-weight: 450;
+  background: linear-gradient(105deg, #c084fc, #22d3ee);
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+[data-theme="light"] .brand-wordmark > span {
+  background-image: linear-gradient(105deg, #9333ea, #087e98);
+}
+.typeorbit-app .nav-link.active {
+  color: var(--cyan);
+}
+.typeorbit-app .nav-link:hover {
+  color: var(--text);
+}
+.typeorbit-app .theme-button {
+  border: 1px solid var(--border);
+  background: var(--surface);
+  border-radius: 10px;
+}
+.typeorbit-app .orbit-hero {
+  padding: 8px 0 24px;
+}
+.orbit-hero .hero-eyebrow {
+  font-size: 8px;
+  letter-spacing: 2.4px;
+  margin-bottom: 12px;
+  color: var(--secondary);
+}
+.orbit-hero .eyebrow-icon {
+  color: var(--cyan);
+  border-color: #22d3ee25;
+  background: #22d3ee06;
+}
+.typeorbit-app .orbit-hero h1 {
+  font-size: clamp(28px, 3.2vw, 39px);
+  letter-spacing: -1.3px;
+  font-weight: 650;
+}
+.typeorbit-app .hero h1 > span {
+  background: linear-gradient(100deg, #c084fc, #a855f7 45%, #22d3ee);
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+[data-theme="light"] .typeorbit-app .hero h1 > span {
+  background-image: linear-gradient(100deg, #9333ea, #087e98);
+}
+.typeorbit-app .orbit-hero > p {
+  font-size: 12px;
+  margin-top: 10px;
+}
+.typeorbit-app .panel,
+.typeorbit-app .test-controls {
+  background:
+    linear-gradient(125deg, #a855f706, transparent 65%), var(--surface);
+  border: 1px solid var(--border);
+  backdrop-filter: blur(12px);
+  box-shadow:
+    0 8px 30px #03081612,
+    inset 0 1px 0 #ffffff03;
+}
+.typeorbit-app .test-controls {
+  margin-top: 4px;
+  border-radius: 12px;
+}
+.typeorbit-app .segment.selected {
+  color: var(--cyan);
+  text-shadow: 0 0 15px #22d3ee18;
+}
+.typeorbit-app .control-group:not(:last-child) {
+  border-left-color: var(--border);
+}
+.typeorbit-app .focus-test {
+  padding-top: clamp(45px, 7vh, 85px);
+}
+.typeorbit-app .test-countdown {
+  color: #c084fc;
+  text-shadow: 0 0 22px #a855f726;
+}
+[data-theme="light"] .typeorbit-app .test-countdown {
+  color: var(--purple);
+  text-shadow: none;
+}
+.typeorbit-app .char-current::before {
+  background: var(--cyan);
+  box-shadow: 0 0 9px #22d3ee35;
+}
+.typeorbit-app .focus-actions .icon-button:hover {
+  color: var(--cyan);
+  background: #22d3ee06;
+}
+.typeorbit-app .primary-button {
+  color: #fff;
+  background: linear-gradient(115deg, #a855f7, #8248e5);
+  border: 1px solid #c084fc50;
+  box-shadow: 0 4px 20px #a855f719;
+}
+.typeorbit-app .primary-button:hover:not(:disabled) {
+  background: linear-gradient(115deg, #b36af8, #925bea);
+  box-shadow: 0 5px 23px #a855f730;
+}
+.typeorbit-app .footer-motto {
+  gap: 8px;
+}
+.typeorbit-app .footer-credit {
+  display: inline-flex !important;
+  gap: 5px;
+}
+.footer-credit strong {
+  color: var(--secondary);
+  font-weight: 500;
+}
+.typeorbit-app .site-footer {
+  border-top: 1px solid var(--border);
+  padding-top: 17px;
+  font-family: var(--font-sans);
+}
+.typeorbit-app .orbit-hero {
+  transition: opacity 0.25s ease;
+}
+.typeorbit-app.test-running .orbit-hero {
+  opacity: 0.35;
+}
+.typeorbit-app.test-running .orbit-moon {
+  animation-play-state: paused;
+}
+@keyframes orbit-revolve {
+  to {
+    transform: rotate(360deg);
+  }
+}
+@media (max-width: 740px) {
+  .typeorbit-app .orbit-hero {
+    padding-top: 8px;
+    padding-bottom: 21px;
+  }
+  .typeorbit-app .focus-test {
+    padding-top: 48px;
+  }
+  .orbit-outer {
+    right: -500px;
+  }
+  .orbit-inner {
+    right: -450px;
+  }
+}
+@media (max-width: 640px) {
+  .typeorbit-app .brand {
+    font-size: 24px;
+  }
+  .brand > .typeorbit-logo {
+    width: 39px;
+    height: 39px;
+  }
+  .typeorbit-app .site-header {
+    height: 116px;
+  }
+  .typeorbit-app .orbit-hero h1 {
+    font-size: 29px;
+  }
+  .orbit-hero .hero-eyebrow {
+    font-size: 7px;
+    letter-spacing: 1.35px;
+  }
+  .typeorbit-app .orbit-hero > p {
+    font-size: 10px;
+    max-width: 280px;
+  }
+  .typeorbit-app .focus-test {
+    padding-top: 38px;
+  }
+  .typeorbit-app .site-footer {
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 8px;
+    font-size: 9px;
+  }
+  .footer-motto .typeorbit-logo {
+    width: 18px;
+    height: 18px;
+  }
+  .typeorbit-app .footer-motto {
+    gap: 4px;
+  }
+  .typeorbit-app .focus-shortcuts {
+    padding-top: 35px;
+  }
+}
+@media (max-width: 360px) {
+  .typeorbit-app .site-footer {
+    font-size: 8px;
+    gap: 5px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .orbit-moon {
+    animation: none;
+  }
+  .typeorbit-app .orbit-hero {
+    transition: none;
+  }
+}

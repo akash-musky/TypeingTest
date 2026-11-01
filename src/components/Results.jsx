@@ -225,7 +225,7 @@ export default function Results({ history, onRetry }) {
     const url = URL.createObjectURL(blob);
     const link = document.createElement("a");
     link.href = url;
-    link.download = "typingtest-results.json";
+    link.download = "typeorbit-results.json";
     link.click();
     setTimeout(() => URL.revokeObjectURL(url), 1000);
   }
