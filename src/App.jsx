@@ -1,12 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from "react";
-import {
-  ArrowLeft,
-  ShieldCheck,
-  Sparkles,
-  Target,
-  Trophy,
-  Zap,
-} from "lucide-react";
+import { ArrowLeft, Sparkles, Zap } from "lucide-react";
 import Navigation, { Footer } from "./components/Navigation";
 import TestControls from "./components/TestControls";
 import TypingArea from "./components/TypingArea";
@@ -49,10 +42,6 @@ export default function App() {
     passage: drill?.passage,
   };
   const test = useTypingTest(config, onComplete);
-  const best = Math.max(
-    0,
-    ...history.filter((r) => !r.practice).map((r) => r.wpm),
-  );
 
   useEffect(() => {
     document.documentElement.dataset.theme = preferences.theme;
@@ -160,7 +149,9 @@ export default function App() {
   }[page];
 
   return (
-    <div className="app-shell">
+    <div
+      className={`app-shell minimal-app ${page === "test" && test.session.status === "running" ? "test-running" : ""}`}
+    >
       <a className="skip-link" href="#main">
         Skip to content
       </a>
@@ -172,13 +163,16 @@ export default function App() {
           update({ theme: preferences.theme === "dark" ? "light" : "dark" })
         }
       />
-      <main id="main" className={`main-container ${page === "test" && !completed ? "test-page" : ""}`}>
+      <main
+        id="main"
+        className={`main-container ${page === "test" && !completed ? "test-page" : ""}`}
+      >
         <div className="sr-only" role="status" aria-live="polite">
           {completed
             ? `Test complete. ${latest.wpm} words per minute. ${latest.accuracy}% accuracy.`
             : ""}
         </div>
-        <section className="hero">
+        <section className={page === "test" && !completed ? "sr-only" : "hero"}>
           <div className="hero-eyebrow">
             <span className="eyebrow-icon">
               <Zap size={11} fill="currentColor" />
@@ -189,18 +183,6 @@ export default function App() {
             {hero.title}
           </h1>
           <p>{hero.subtitle}</p>
-          {page === "test" && (
-            <div className="hero-meta">
-              <span>
-                <span className="live-dot" /> Just you. In the zone.
-              </span>
-              <i />
-              <span>
-                <Trophy size={13} />
-                Personal best <strong>{best ? `${best} wpm` : "—"}</strong>
-              </span>
-            </div>
-          )}
         </section>
         {storageError && (
           <div className="storage-notice" role="status">
@@ -253,35 +235,6 @@ export default function App() {
                   preferences={preferences}
                   update={update}
                 />
-                <div className="benefit-row">
-                  <div>
-                    <span className="benefit-icon violet">
-                      <Zap size={18} />
-                    </span>
-                    <span>
-                      <strong>Find your flow</strong>
-                      <small>Less distraction. More momentum.</small>
-                    </span>
-                  </div>
-                  <div>
-                    <span className="benefit-icon cyan">
-                      <Target size={18} />
-                    </span>
-                    <span>
-                      <strong>Precision over pressure</strong>
-                      <small>Build accuracy. Speed will follow.</small>
-                    </span>
-                  </div>
-                  <div>
-                    <span className="benefit-icon pink">
-                      <ShieldCheck size={18} />
-                    </span>
-                    <span>
-                      <strong>Your progress stays yours</strong>
-                      <small>Private, local, and always free.</small>
-                    </span>
-                  </div>
-                </div>
               </>
             )}
           </div>

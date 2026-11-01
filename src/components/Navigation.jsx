@@ -6,7 +6,6 @@ import {
   Settings2,
   Sparkles,
   Sun,
-  Terminal,
 } from "lucide-react";
 
 const items = [
@@ -30,7 +29,7 @@ export default function Navigation({ page, onNavigate, theme, toggleTheme }) {
           }}
         >
           <span className="brand-icon">
-            <Terminal size={22} strokeWidth={2.7} />
+            <Keyboard size={30} strokeWidth={1.8} />
           </span>
           <span>
             Typing<span className="brand-light">Test</span>
@@ -42,6 +41,7 @@ export default function Navigation({ page, onNavigate, theme, toggleTheme }) {
             <a
               key={id}
               href={`#${id}`}
+              title={label}
               className={`nav-link ${page === id ? "active" : ""}`}
               aria-current={page === id ? "page" : undefined}
               onClick={(e) => {

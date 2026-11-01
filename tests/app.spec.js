@@ -1,6 +1,6 @@
 import { test, expect } from "@playwright/test";
 
-test("timer, mistakes, correction, keyboard, results, chart and history persistence", async ({
+test("timer, mistakes, correction, results, chart and history persistence", async ({
   page,
 }) => {
   const errors = [];
@@ -10,18 +10,20 @@ test("timer, mistakes, correction, keyboard, results, chart and history persiste
   await page
     .getByRole("button", { name: "DURATION: 15s", exact: true })
     .click();
-  await page.getByRole("button", { name: "Start Test", exact: true }).click();
+  await page
+    .getByRole("textbox", { name: "Type the displayed passage" })
+    .click();
   await page.clock.fastForward(5_000);
-  await expect(page.locator(".live-metric").first()).toContainText("15");
+  await expect(
+    page.getByRole("timer", { name: "Seconds remaining" }),
+  ).toContainText("15");
   const passage = await page.getByTestId("passage").innerText();
   await page.keyboard.down("x");
-  await expect(page.locator(".key.pressed")).toHaveCount(1);
   await page.keyboard.up("x");
   await expect(page.locator(".char-incorrect")).toHaveCount(1);
   await page.keyboard.press("Backspace");
   await page.keyboard.type(passage.slice(0, 15));
   await expect(page.locator(".char-correct")).toHaveCount(15);
-  await expect(page.locator(".metric-pink")).toContainText("01");
   await page.clock.fastForward(15_000);
   await expect(page.getByText("Test complete", { exact: true })).toBeVisible();
   await expect(page.getByRole("button", { name: "Try Again" })).toBeVisible();
@@ -60,23 +62,35 @@ test("all controls, shortcuts, navigation and settings work and persist", async 
   await page
     .getByRole("button", { name: "DURATION: 60s", exact: true })
     .click();
-  await page.getByRole("button", { name: "Start Test", exact: true }).click();
+  await page
+    .getByRole("textbox", { name: "Type the displayed passage" })
+    .click();
   await page.keyboard.type("12");
   await page.keyboard.press("Control+Enter");
   await expect(
     page.getByRole("textbox", { name: "Type the displayed passage" }),
   ).toHaveValue("");
-  await expect(page.locator(".live-metric").first()).toContainText("60");
+  await expect(
+    page.getByRole("timer", { name: "Seconds remaining" }),
+  ).toContainText("60");
+  await page.keyboard.type("12");
+  await page.keyboard.press("Tab");
+  await expect(
+    page.getByRole("button", { name: "Restart test", exact: true }),
+  ).toBeFocused();
+  await page.keyboard.press("Enter");
+  await expect(
+    page.getByRole("textbox", { name: "Type the displayed passage" }),
+  ).toHaveValue("");
   await page.getByRole("link", { name: "Settings", exact: true }).click();
   await page.getByRole("button", { name: "Light", exact: true }).click();
-  await page.getByRole("switch", { name: "Virtual keyboard" }).click();
   await page.getByRole("switch", { name: "Typing sounds" }).click();
   await page.getByRole("button", { name: "large typing text" }).click();
   await page.reload();
   await expect(page.locator("html")).toHaveAttribute("data-theme", "light");
   await expect(
     page.getByRole("switch", { name: "Virtual keyboard" }),
-  ).toHaveAttribute("aria-checked", "false");
+  ).toHaveCount(0);
   await expect(
     page.getByRole("switch", { name: "Typing sounds" }),
   ).toHaveAttribute("aria-checked", "true");
@@ -109,7 +123,9 @@ test("practice can complete early, exports history, and clears data only on conf
   await expect(page.locator(".drill-banner")).toContainText(
     "Find your home row",
   );
-  await page.getByRole("button", { name: "Start Test", exact: true }).click();
+  await page
+    .getByRole("textbox", { name: "Type the displayed passage" })
+    .click();
   const passage = await page.getByTestId("passage").innerText();
   await page.keyboard.type(passage[0]);
   await page.clock.fastForward(10_000);
@@ -151,6 +167,10 @@ test("desktop and mobile layouts fit, and touch typing accepts input", async ({
   page,
 }) => {
   await page.goto("/");
+  await expect(
+    page.locator(".metrics-sidebar, .virtual-keyboard, .live-metric"),
+  ).toHaveCount(0);
+  await expect(page.getByRole("timer")).toHaveCount(1);
   await page.screenshot({
     path: "test-results/test-desktop.png",
     fullPage: true,
@@ -165,7 +185,9 @@ test("desktop and mobile layouts fit, and touch typing accepts input", async ({
     ).toBe(true);
   }
   await page.setViewportSize({ width: 390, height: 844 });
-  await page.getByRole("button", { name: "Start Test", exact: true }).click();
+  await page
+    .getByRole("textbox", { name: "Type the displayed passage" })
+    .click();
   const passage = await page.getByTestId("passage").innerText();
   await page
     .getByRole("textbox", { name: "Type the displayed passage" })
@@ -196,7 +218,9 @@ test("completed tests stop accepting input and can restart with a keyboard short
   await page
     .getByRole("button", { name: "DURATION: 15s", exact: true })
     .click();
-  await page.getByRole("button", { name: "Start Test", exact: true }).click();
+  await page
+    .getByRole("textbox", { name: "Type the displayed passage" })
+    .click();
   await page.keyboard.type("test");
   await page.clock.fastForward(15_000);
   await expect(page.getByText("Test complete", { exact: true })).toBeVisible();
@@ -214,10 +238,14 @@ test("completed tests stop accepting input and can restart with a keyboard short
   await expect(
     page.getByRole("textbox", { name: "Type the displayed passage" }),
   ).toHaveValue("");
-  await expect(page.locator(".live-metric").first()).toContainText("15");
+  await expect(
+    page.getByRole("timer", { name: "Seconds remaining" }),
+  ).toContainText("15");
   await page.keyboard.type("x");
   await page.clock.fastForward(1_000);
-  await expect(page.locator(".live-metric").first()).toContainText("14");
+  await expect(
+    page.getByRole("timer", { name: "Seconds remaining" }),
+  ).toContainText("14");
 });
 
 test("unavailable or malformed storage does not break the app", async ({
@@ -237,7 +265,9 @@ test("unavailable or malformed storage does not break the app", async ({
   await expect(page.locator(".storage-notice")).toContainText(
     "Browser storage is unavailable",
   );
-  await page.getByRole("button", { name: "Start Test", exact: true }).click();
+  await page
+    .getByRole("textbox", { name: "Type the displayed passage" })
+    .click();
   await page.keyboard.type("hello");
   await expect(
     page.getByRole("textbox", { name: "Type the displayed passage" }),

@@ -109,16 +109,6 @@ export default function Settings({
             <Keyboard size={18} /> Your typing experience
           </h2>
           <SettingRow
-            title="Virtual keyboard"
-            description="See every keystroke as it happens."
-          >
-            <Toggle
-              label="Virtual keyboard"
-              checked={preferences.keyboard}
-              onChange={(keyboard) => update({ keyboard })}
-            />
-          </SettingRow>
-          <SettingRow
             title="Typing sounds"
             description="A soft click for each key. A lower tone for mistakes."
           >

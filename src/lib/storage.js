@@ -1,7 +1,6 @@
 export const defaults = {
   theme: "dark",
   sound: false,
-  keyboard: true,
   smoothCaret: true,
   fontSize: "medium",
   duration: 30,
