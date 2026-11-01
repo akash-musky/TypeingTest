@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://typeorbit-akash-kumar.netlify.app/sitemap.xml
