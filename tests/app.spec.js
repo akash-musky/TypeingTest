@@ -39,7 +39,9 @@ test("TypeOrbit preserves existing history and preferences and respects reduced 
     );
   });
   await page.goto("/");
-  await expect(page).toHaveTitle("TypeOrbit — Type Beyond Limits.");
+  await expect(page).toHaveTitle(
+    "TypeOrbit — Free Online Typing Test | WPM & Accuracy",
+  );
   await expect(
     page.getByRole("link", { name: "TypeOrbit home" }),
   ).toBeVisible();
@@ -63,7 +65,9 @@ test("TypeOrbit preserves existing history and preferences and respects reduced 
   await expect(
     page.getByRole("switch", { name: "Typing sounds" }),
   ).toHaveAttribute("aria-checked", "true");
-  await expect(page).toHaveTitle("TypeOrbit — Type Beyond Limits.");
+  await expect(page).toHaveTitle(
+    "TypeOrbit — Free Online Typing Test | WPM & Accuracy",
+  );
 });
 
 test("timer, mistakes, correction, results, chart and history persistence", async ({

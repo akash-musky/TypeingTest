@@ -63,7 +63,7 @@ export default function App() {
 
   useEffect(() => {
     if (page !== "test") test.restart();
-    document.title = "TypeOrbit — Type Beyond Limits.";
+    document.title = "TypeOrbit — Free Online Typing Test | WPM & Accuracy";
   }, [page, test.restart]);
 
   useEffect(() => {
@@ -109,13 +109,14 @@ export default function App() {
     page === "test" && test.session.status === "finished" && latest;
   const hero = {
     test: {
-      eyebrow: "FIND YOUR FOCUS. EXPAND YOUR ORBIT.",
+      eyebrow: "FREE ONLINE TYPING TEST",
       title: (
         <>
           Type Beyond <span>Limits.</span>
         </>
       ),
-      subtitle: "A little focus. A steady rhythm. A universe of possibility.",
+      subtitle:
+        "Test your typing speed in WPM, improve accuracy, and practice for free.",
     },
     results: {
       eyebrow: "EVERY KEYSTROKE TELLS A STORY.",
